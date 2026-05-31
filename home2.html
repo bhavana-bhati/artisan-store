@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artisan & Homemade Products</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ebebc6;
+    color: #3e2723;
+}
+
+/* NAVBAR */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #3e2723;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 5%;
+    z-index: 1000;
+}
+
+/* LOGO IMAGE */
+.logo img {
+    height: 50px; /* Change this if you want bigger logo */
+    width: auto;
+    display: block;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    color: #f5f5dc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* HERO SECTION */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    padding-top: 70px;
+    padding-bottom: 30px;
+}
+
+/* LEFT SIDE */
+.hero-content {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 2%;
+}
+
+/* HEADING STRUCTURE */
+.main-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.small-text {
+    font-size: 3.8rem;
+    font-weight: 700;
+}
+
+.big-text {
+    font-size: 3.8rem;
+    font-weight: 700;
+    line-height: 1.05;
+    white-space: nowrap;
+}
+
+/* PARAGRAPH */
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 420px;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    background-color: #b37d5c;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+/* RIGHT SIDE */
+.video-container {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-box {
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 4 / 3;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+}
+
+.video-box video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* MUTE BUTTON */
+.mute-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    font-size: 18px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* CONTROLS */
+.video-controls {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 30px;
+}
+
+.video-controls button {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    font-size: 26px;
+    padding: 10px 18px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* FOOTER */
+footer {
+    background-color: #3e2723;
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .hero-content,
+    .video-container {
+        width: 100%;
+        padding: 40px 8%;
+    }
+
+    .big-text {
+        font-size: 2.5rem;
+    }
+
+    .video-box {
+        max-width: 95%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">
+        <!-- Replace logo.png with your logo file -->
+        <img src="images/logo.png" alt="Logo">
+    </div>
+
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+
+    <div class="hero-content">
+        <h1 class="main-heading">
+            <span class="small-text">Welcome to</span>
+            <span class="big-text">Artisan & Homemade</span>
+            <span class="big-text">Products</span>
+        </h1>
+
+        <p>
+            Discover unique, handcrafted goods from skilled artisans around the world.
+        </p>
+
+        <a href="#" class="btn">Explore More</a>
+    </div>
+
+    <div class="video-container">
+        <div class="video-box">
+            <!-- Removed loop to enable auto swap -->
+            <video id="heroVideo" autoplay muted></video>
+
+            <button id="muteBtn" class="mute-btn">🔇</button>
+
+            <div class="video-controls">
+                <button id="prevBtn">&lt;</button>
+                <button id="nextBtn">&gt;</button>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<footer>
+    Artisan & Homemade Products
+</footer>
+
+<script>
+const video = document.getElementById("heroVideo");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const muteBtn = document.getElementById("muteBtn");
+
+const videoSources = [
+    "video/v5.mp4",
+    "video/video2.mp4"
+];
+
+let currentVideoIndex = 0;
+
+function setVideo(index) {
+    currentVideoIndex = index;
+    video.src = videoSources[currentVideoIndex];
+    video.play();
+}
+
+setVideo(currentVideoIndex);
+
+/* NEXT BUTTON */
+nextBtn.addEventListener("click", () => {
+    currentVideoIndex = (currentVideoIndex + 1) % videoSources.length;
+    setVideo(currentVideoIndex);
+});
+
+/* PREVIOUS BUTTON */
+prevBtn.addEventListener("click", () => {
+    currentVideoIndex = (currentVideoIndex - 1 + videoSources.length) % videoSources.length;
+    setVideo(currentVideoIndex);
+});
+
+/* AUTO SWAP WHEN VIDEO ENDS */
+video.addEventListener("ended", () => {
+    currentVideoIndex = (currentVideoIndex + 1) % videoSources.length;
+    setVideo(currentVideoIndex);
+});
+
+/* MUTE BUTTON */
+muteBtn.addEventListener("click", () => {
+    video.muted = !video.muted;
+    muteBtn.textContent = video.muted ? "🔇" : "🔊";
+});
+</script>
+
+</body>
+</html>
